@@ -1,9 +1,10 @@
-import { SortTypesList } from "../constants/sortType.js";
 import Folder from "../models/Folder.js";
 import { checkDuplicateFolder } from "../utils/checkDuplicate.js";
+import { sortList } from "../utils/sortList.js";
 
 export const getFolder = async (req, res) => {
-  const folder = await Folder.find();
+  const sort = sortList(req.body.sortType, "folder");
+  const folder = await Folder.find().sort(sort);
   res.status(200).json(folder);
 };
 

@@ -12,9 +12,13 @@ const customErrorList = {
     status: 409,
     message: "A bookmark with same url is already present",
   },
+  InvalidModel: {
+    status: 500,
+    message: "Invalid Model Error",
+  },
 };
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, _, res, next) => {
   if (err.name == "Error") {
     const customError = customErrorList[err.message];
     res.status(customError.status).json(customError.message);

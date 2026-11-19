@@ -5,6 +5,7 @@ import {
   updateBookmark,
   deleteBookmark,
   getBookmarkById,
+  BookmarkWithTag,
 } from "../controllers/bookmarksController.js";
 
 const router = express.Router();
@@ -19,4 +20,5 @@ router
   .put(updateBookmark)
   .delete(deleteBookmark);
 
+router.get("/tags/:tag", BookmarkWithTag);
 export default router;

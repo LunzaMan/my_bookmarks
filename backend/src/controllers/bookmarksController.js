@@ -1,10 +1,9 @@
 import Bookmark from "../models/Bookmark.js";
-import { SortTypesList } from "../constants/sortType.js";
 import { checkDuplicateBookmark } from "../utils/checkDuplicate.js";
+import { sortList } from "../utils/sortList.js";
 
 export const getBookmarks = async (req, res) => {
-  const { sortType } = req.body || {};
-  const sort = SortTypesList[sortType] || SortTypesList.lastModified;
+  const sort = sortList(req.body.sortType, "bookmark");
   const bookmarks = await Bookmark.find().sort(sort);
   res.status(200).json(bookmarks);
 };
@@ -39,4 +38,10 @@ export const deleteBookmark = async (req, res) => {
   const deletedBookmark = await Bookmark.findByIdAndDelete(req.params.id);
   if (!deletedBookmark) throw new Error("InvalidID");
   res.status(201).json({ message: "Bookmark deleted" });
+};
+
+export const BookmarkWithTag = async (req, res) => {
+  const tag_name = req.params.tag;
+  const bookmarks = await Bookmark.find({ "tags.name": tag_name });
+  res.status(200).json(bookmarks);
 };

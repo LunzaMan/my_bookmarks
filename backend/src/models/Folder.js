@@ -13,7 +13,7 @@ const folderSchema = new mongoose.Schema(
       default: "folder",
     },
   },
-  { timeStamps: true },
+  { timestamps: true },
 );
 
 const Folder = mongoose.model("Folder", folderSchema);
