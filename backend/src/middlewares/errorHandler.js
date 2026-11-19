@@ -4,12 +4,19 @@ const customErrorList = {
     status: 404,
     message: "Page not found: Bookmark ID is invalid",
   },
+  DuplicateFolderEntry: {
+    status: 409,
+    message: "A folder of the same name is present",
+  },
+  DuplicateURL: {
+    status: 409,
+    message: "A bookmark with same url is already present",
+  },
 };
 
 const errorHandler = (err, req, res, next) => {
   if (err.name == "Error") {
     const customError = customErrorList[err.message];
-    console.log("Error Name: ", customError.status);
     res.status(customError.status).json(customError.message);
   }
 

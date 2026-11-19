@@ -1,5 +1,6 @@
 import Bookmark from "../models/Bookmark.js";
 import { SortTypesList } from "../constants/sortType.js";
+import { checkDuplicateBookmark } from "../utils/checkDuplicate.js";
 
 export const getBookmarks = async (req, res) => {
   const { sortType } = req.body || {};
@@ -10,6 +11,7 @@ export const getBookmarks = async (req, res) => {
 
 export const newBookmark = async (req, res) => {
   const { title, url, description, folder, tags } = req.body;
+  await checkDuplicateBookmark(url);
   const newBookmark = new Bookmark({ title, url, description, folder, tags });
   await newBookmark.save();
   res.status(201).json(newBookmark);
@@ -23,6 +25,7 @@ export const getBookmarkById = async (req, res) => {
 
 export const updateBookmark = async (req, res) => {
   const { title, url, description, folder, tags } = req.body;
+  await checkDuplicateBookmark(url);
   const updatedBookmark = await Bookmark.findByIdAndUpdate(
     req.params.id,
     { title, url, description, folder, tags },

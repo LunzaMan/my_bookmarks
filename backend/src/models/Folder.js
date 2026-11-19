@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 
-
 const folderSchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        icon: {
-            type: String,
-            default: "folder"
-        }
+  {
+    name: {
+      type: String,
+      required: [true, "Folder requires a name"],
+      trim: true,
+      unique: true,
     },
-    { timeStamps: true }
+    icon: {
+      type: String,
+      default: "folder",
+    },
+  },
+  { timeStamps: true },
 );
 
 const Folder = mongoose.model("Folder", folderSchema);
